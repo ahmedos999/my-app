@@ -6,11 +6,11 @@ interface ChildComponentProps {
 
 const Modal: React.FC<ChildComponentProps> = ({ closeModal }) => {
   return (
-    <div className="modal fixed z-50 inset-0 overflow-y-auto">
-      <div className="modal-content bg-white p-4 rounded-lg shadow-lg mx-auto mt-10 w-1/2">
-        <h2 className="text-xl font-bold mb-4">Modal Title</h2>
+    <div className="flex justify-center items-center fixed z-50 inset-0 overflow-y-auto bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm">
+      <div className="bg-white p-4 rounded-lg shadow-lg w-1/4 h-1/4 flex flex-col justify-between">
+        <h2 className="text-xl font-bold mb-4">Popup Menu</h2>
         <p>This is a server-side rendered modal.</p>
-        <button onClick={closeModal} className="mt-4 p-2 bg-red-500 text-white rounded">
+        <button onClick={closeModal} className=" p-2 bg-red-500 text-white rounded">
           Close
         </button>
       </div>

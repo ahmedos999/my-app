@@ -6,6 +6,7 @@ import {TextureLoader} from 'three/src/loaders/TextureLoader.js'
 import {OrbitControls} from '@react-three/drei'
 import { useMotionValue,useSpring } from "framer-motion";
 import {motion} from 'framer-motion-3d'
+import Navbar from "../components/Navbar";
 
 
 
@@ -13,6 +14,7 @@ import {motion} from 'framer-motion-3d'
 export default function home(){
     return(
         <div className=" h-svh  bg-gray-900">
+            <Navbar></Navbar>
             <Canvas>
                 <OrbitControls enableZoom={false} enablePan={false}></OrbitControls>
                 <ambientLight intensity={2}></ambientLight>

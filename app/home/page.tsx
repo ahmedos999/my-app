@@ -1,9 +1,11 @@
 'use client'
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { Mesh } from 'three';
 import { Canvas,useFrame,useLoader } from "@react-three/fiber"
 import {TextureLoader} from 'three/src/loaders/TextureLoader.js'
 import {OrbitControls} from '@react-three/drei'
+import { useMotionValue,useSpring } from "framer-motion";
+import {motion} from 'framer-motion-3d'
 
 
 
@@ -23,31 +25,57 @@ export default function home(){
 
 function Cube(){
 
-    const mesh = useRef<Mesh | null>(null);
-    useFrame((state,delta)=>{
-        if(mesh.current){
-        mesh.current.rotation.x += delta * 0.25
-        mesh.current.rotation.y += delta * 0.25
-        mesh.current.rotation.z += delta * 0.25
-        }
-        
-    })
+    // const mesh = useRef<Mesh | null>(null);
+    const mesh =  useRef(null)
+    const option ={
+        damping:20
+    }
+    const mouse = {
+        x:useSpring(useMotionValue(0),option),
+        y:useSpring(useMotionValue(0),option)
+    }
+    
 
-    const texture_1 = useLoader(TextureLoader,"/imgs/tailwind.png")
+    const manageMouseMove = (e:MouseEvent)=>{
+        console.log(e)
+        const {innerWidth,innerHeight} = window
+        const {clientX,clientY} = e
+        const x = -0.5 + clientX/innerWidth
+        const y = -0.5 + clientY / innerHeight 
+
+        mouse.x.set(x)
+        mouse.y.set(y)
+    }
+
+    useEffect(()=>{
+        window.addEventListener('mousemove',manageMouseMove)
+
+        return ()=>window.removeEventListener("mousemove",manageMouseMove)
+    },[])
+    // useFrame((state,delta)=>{
+    //     if(mesh.current){
+    //     mesh.current.rotation.x += delta * 0.25
+    //     mesh.current.rotation.y += delta * 0.25
+    //     mesh.current.rotation.z += delta * 0.25
+    //     }
+        
+    // })
+
+    const texture_1 = useLoader(TextureLoader,"/imgs/tailwind.jpg")
     const texture_2 = useLoader(TextureLoader,"/imgs/react.png")
     const texture_3 = useLoader(TextureLoader,"/imgs/three.png")
     const texture_4 = useLoader(TextureLoader,"/imgs/motion.png")
     const texture_5 = useLoader(TextureLoader,"/imgs/next.png")
     const texture_6 = useLoader(TextureLoader,"/imgs/ty.png")
     return(
-       <mesh ref={mesh}>
+       <motion.mesh ref={mesh} rotation-y={mouse.x} rotation-x={mouse.y}>
         <boxGeometry args={[2.5,2.5,2.5]}></boxGeometry>
-        <meshStandardMaterial map={texture_1} attach={"material-0"}></meshStandardMaterial>
-        <meshStandardMaterial map={texture_2} attach={"material-1"}></meshStandardMaterial>
-        <meshStandardMaterial map={texture_3} attach={"material-2"}></meshStandardMaterial>
-        <meshStandardMaterial map={texture_4} attach={"material-3"}></meshStandardMaterial>
-        <meshStandardMaterial map={texture_5} attach={"material-4"}></meshStandardMaterial>
-        <meshStandardMaterial map={texture_6} attach={"material-5"}></meshStandardMaterial>
-       </mesh>
+        <meshStandardMaterial map={texture_1} attach={"material-0"} color={'white'}></meshStandardMaterial>
+        <meshStandardMaterial map={texture_2} attach={"material-1"} color={'white'}></meshStandardMaterial>
+        <meshStandardMaterial map={texture_3} attach={"material-2"}color={'white'}></meshStandardMaterial>
+        <meshStandardMaterial map={texture_4} attach={"material-3"}color={'white'}></meshStandardMaterial>
+        <meshStandardMaterial map={texture_5} color={'white'} attach={"material-4"}></meshStandardMaterial>
+        <meshStandardMaterial map={texture_6} attach={"material-5"}color={'white'}></meshStandardMaterial>
+       </motion.mesh>
     )
 }

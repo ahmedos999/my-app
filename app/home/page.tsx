@@ -32,14 +32,14 @@ function Cube(){
     const option ={
         damping:20
     }
+    // inital the mouse position values
     const mouse = {
         x:useSpring(useMotionValue(0),option),
         y:useSpring(useMotionValue(0),option)
     }
     
-
+    // function to set the motion values from the mouse move
     const manageMouseMove = (e:MouseEvent)=>{
-        console.log(e)
         const {innerWidth,innerHeight} = window
         const {clientX,clientY} = e
         const x = -0.5 + clientX/innerWidth
@@ -50,25 +50,22 @@ function Cube(){
     }
 
     useEffect(()=>{
+
+        // attach the mouse move function to mouse move event
         window.addEventListener('mousemove',manageMouseMove)
 
+        // dispose the function after leaving page
         return ()=>window.removeEventListener("mousemove",manageMouseMove)
     },[])
-    // useFrame((state,delta)=>{
-    //     if(mesh.current){
-    //     mesh.current.rotation.x += delta * 0.25
-    //     mesh.current.rotation.y += delta * 0.25
-    //     mesh.current.rotation.z += delta * 0.25
-    //     }
-        
-    // })
 
+    // load texture for each side of the cube with an image 
     const texture_1 = useLoader(TextureLoader,"/imgs/tailwind.jpg")
     const texture_2 = useLoader(TextureLoader,"/imgs/react.png")
     const texture_3 = useLoader(TextureLoader,"/imgs/three.png")
     const texture_4 = useLoader(TextureLoader,"/imgs/motion.png")
     const texture_5 = useLoader(TextureLoader,"/imgs/next.png")
     const texture_6 = useLoader(TextureLoader,"/imgs/ty.png")
+    
     return(
        <motion.mesh ref={mesh} rotation-y={mouse.x} rotation-x={mouse.y}>
         <boxGeometry args={[2.5,2.5,2.5]}></boxGeometry>

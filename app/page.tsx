@@ -6,9 +6,10 @@ import Navbar from "./components/Navbar";
 
 export default function Home() {
 
-
+  // state the toggle open and close the popup menu
   const [showModal,setShowModal] = useState<boolean>(false)
 
+  // callback function passed to Model component 
   const closeModal = ()=>{
     setShowModal(false)
   }

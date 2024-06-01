@@ -33,7 +33,7 @@ function Cube(){
     const option ={
         damping:20
     }
-    // inital the mouse position values
+    // inital the cube position values
     const mouse = {
         x:useSpring(useMotionValue(-0.4),option),
         y:useSpring(useMotionValue(0.3),option)

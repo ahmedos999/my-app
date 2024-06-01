@@ -15,6 +15,7 @@ export default function home(){
     return(
         <div className=" h-svh  bg-gray-900">
             <Navbar></Navbar>
+            <p className="text-center text-white">Move the Cube</p>
             <Canvas>
                 <OrbitControls enableZoom={false} enablePan={false}></OrbitControls>
                 <ambientLight intensity={2}></ambientLight>
@@ -34,8 +35,8 @@ function Cube(){
     }
     // inital the mouse position values
     const mouse = {
-        x:useSpring(useMotionValue(0),option),
-        y:useSpring(useMotionValue(0),option)
+        x:useSpring(useMotionValue(-0.4),option),
+        y:useSpring(useMotionValue(0.3),option)
     }
     
     // function to set the motion values from the mouse move
